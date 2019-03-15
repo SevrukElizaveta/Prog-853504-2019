@@ -1,63 +1,29 @@
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
 
-int Counter(int num) {
-    // счётчик единиц в двоичной записи числа
-    int counter = 0;
-    for (int i = 32768; i > 0; i /= 2)
-    {
-            if (num / i == 1)
-            {
-                num -= i;
-                counter ++;
-            }
-    }
-    return counter;
+int findMaximumPowerOfTwoInRange(int rangeStart, int rangeEnd) {
+    int maxPowOfTwoInRange = 1;
+    while (maxPowOfTwoInRange * 2 <= rangeEnd)
+        maxPowOfTwoInRange *= 2;
+    return maxPowOfTwoInRange;
 }
 
-void Number( int num, int count)
+void printBinaryFormOfNumber(int number)
 {
-    if (count == Counter(num))
-    {
-     printf("\nЧисло с максимальным кол-вом единиц в двоичном коде:  ");
-     printf("%d\n" , num);
-     printf("Его запись в двоичной системе исчисления:  ");
-        for (int i = 32768; i > 0; i /= 2)
-        {
-            if (num / i == 1)
-            {
-                printf("1");
-                num -= i;
-            }
-            else printf("0");
-            
-        }
-    }
-    printf("\n");
+    if (number > 1)
+        printBinaryFormOfNumber(number / 2);
+    printf("%d", number % 2);
 }
 
-int main() {
-    int max = 0;
-    int start, end, temp;
-    
-    printf(" Введите интервал (максимальное число 32768). От ") ; // 2^15 = 32768
-    scanf("%d", &start);
-    printf(" до ") ;
-    scanf("%d", &end);
-    if (end < 0 || end > 32768)
-    {
-        printf(" Ошибка ввода !") ;
-        return 0;
-    }
-    for (int i = start; i <= end; i++)
-    {
-       temp  = Counter(i);
-        if (temp > max ) max = temp;
-    }
-    for (int i = start; i <= end; i++)
-        Number(i, max);
+int main(int argc, const char * argv[]) {
+    int rangeStart, rangeEnd;
+    printf("Enter range start: ");
+    scanf("%d", &rangeStart);
+    printf("Enter range end: ");
+    scanf("%d", &rangeEnd);
+    int numWithMaxNumberOfOnes = rangeEnd <= 3 ? rangeEnd : findMaximumPowerOfTwoInRange(rangeStart, rangeEnd) - 1;
+    printf("Number with maximum count of ones in decimal representation: %d\n", numWithMaxNumberOfOnes);
+    printf("Number with maximum count of ones in binary representation: ");
+    printBinaryFormOfNumber(numWithMaxNumberOfOnes);
     printf("\n");
-    
     return 0;
 }
