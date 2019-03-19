@@ -2,7 +2,7 @@
 
 int findMaximumPowerOfTwoInRange(int rangeStart, int rangeEnd) {
     int maxPowOfTwoInRange = 1;
-    while (maxPowOfTwoInRange * 2 <= rangeEnd)
+    while ((maxPowOfTwoInRange * 2 - 1) <= rangeEnd)
         maxPowOfTwoInRange *= 2;
     return maxPowOfTwoInRange;
 }
